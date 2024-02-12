@@ -1,0 +1,109 @@
+<div class="container mt-4">
+  <h1 class="mb-4">Fiche Produit</h1>
+  <form #produitForm="ngForm" (ngSubmit)="validerFormulaire(produitForm)" *ngIf="!!produitCourant">
+    <table class="table">
+        <tr>
+          <td>Code</td>
+          <td>
+            <input type="text" class="form-control" id="produitCourantcode" name="code" [(ngModel)]="produitCourant.code" required>
+          </td>
+        </tr>
+        <tr>
+          <td>Désignation</td>
+          <td>
+            <input type="text" class="form-control" id="produitCourantdesignation" name="designation" [(ngModel)]="produitCourant.designation" required>
+          </td>
+        </tr>
+        <tr>
+          <td>Prix</td>
+          <td>
+            <input type="text" class="form-control" id="produitCourantprix" name="prix" [(ngModel)]="produitCourant.prix" required>
+          </td>
+        </tr>
+        <tr>
+          <td>Quantité</td>
+          <td>
+            <input type="text" class="form-control" id="produitCourantQte" name="quantite" [(ngModel)]="produitCourant.quantite" required>
+          </td>
+        </tr>
+        <!-- ... (autres champs du formulaire) ... -->
+
+        <tr>
+          <td>Categorie</td>
+          <td>
+            <select class="form-select" aria-label="Default select example" name="categorie" [(ngModel)]="produitCourant.categorie" required>
+              <ng-container *ngFor="let categorie of categories">
+                <option [value]="categorie.id">{{categorie.libelle}}</option>
+              </ng-container>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="text-center">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="annulerSaisie()">Effacer</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="!produitForm.form.valid">Valider</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+
+
+    <div class="container"> 
+        <h1 class="mb-4">Liste des produits</h1>
+
+        <!-- Recherche -->
+
+        <!-- div class="mb-3">
+          <label for="searchInput" class="form-label">Rechercher:</label>
+          <input type="text" class="form-control" id="searchInput" [(ngModel)]="searchTerm" (change)="onSearchChange()" />
+        </div -->
+        <!-- div class="mb-3">
+          <label for="searchInput" class="form-label">Rechercher:</label>
+          <input type="text" class="form-control" id="searchInput" [(ngModel)]="searchTerm" (input)="onSearchChange()" />
+        </div -->
+
+        <div class="mb-3">
+          <label for="searchInput" class="form-label">Rechercher:</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="searchInput" [(ngModel)]="searchTerm" />
+            <button type="button" class="btn btn-primary" (click)="onSearchChange()">Rechercher</button>
+          </div>
+        </div>
+        
+        <!-- Table Produit -->
+
+        <table class="table table-striped"> 
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Code</th>
+                    <th>Désignation</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>                
+                    <th>Categorie</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of produitsFiltres">
+                <td>{{p.id}}</td>
+                <td>{{p.code}}</td>
+                <td>{{p.designation}}</td>
+                <td>{{p.prix}}</td>
+                <td>{{p.quantite}}</td>
+                <td>{{p.categorie?.libelle}}</td>
+                
+                <td>
+                  <button (click)="editerProduit(p)" class="btn btn-dark me-3">
+                      <i class="bi bi-pencil"></i> Editer
+                  </button>
+                  <button (click)="supprimerProduit(p)" class="btn btn-danger">
+                      <i class="bi bi-trash"></i> Supprimer
+                  </button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+</div>
